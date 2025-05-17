@@ -61,3 +61,21 @@ function calculoPromesa(arreglo: Persona[]): Promise<[string, number][]>{
 calculoPromesa(arregloPersonas).then(resultado => {
     mostrarArreglo("Promesa: ", resultado);
 });
+
+function esperar(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// FUNCION ASYNC AWAIT
+async function calculoAsyncAwait(arreglo: Persona[]): Promise<[string, number][]> {
+    const resultado = arreglo.map(async (persona) => {
+        await esperar(4000);
+        const edad = calcularEdad(persona.fechaNacimiento);
+        return [persona.nombre, edad] as [string, number];
+    });
+    return await Promise.all(resultado);
+}
+
+calculoAsyncAwait(arregloPersonas).then(resultado => {
+    mostrarArreglo("Async Await: ", resultado);
+});
