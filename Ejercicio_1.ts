@@ -44,3 +44,20 @@ function calculoCallback(
 }
 
 calculoCallback(arregloPersonas, calcularEdad, mostrarArreglo);
+
+// FUNCION PROMESA
+function calculoPromesa(arreglo: Persona[]): Promise<[string, number][]>{
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const resultado: [string, number][] = arreglo.map(persona => {
+                const edad = calcularEdad(persona.fechaNacimiento);
+                return [persona.nombre, edad];
+            });
+            resolve(resultado);
+        }, 4000);
+    });
+}
+
+calculoPromesa(arregloPersonas).then(resultado => {
+    mostrarArreglo("Promesa: ", resultado);
+});
